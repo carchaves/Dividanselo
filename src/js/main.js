@@ -156,7 +156,7 @@ function loadApp(roomData, user) {
 
   const propagandaCard = document.createElement('div');
   propagandaCard.className = 'card';
-  propagandaCard.style.cssText = 'padding: 0; overflow: hidden;';
+  propagandaCard.style.cssText = 'padding: 0; overflow: hidden; margin-top: 40px;';
   const propagandaTitle = document.createElement('div');
   propagandaTitle.className = 'card__title';
   propagandaTitle.style.cssText = 'padding: var(--space-4) var(--space-5) var(--space-3);';
