@@ -49,7 +49,7 @@ function showAuth() {
   });
   appEl.innerHTML = auth.render();
   auth.mount();
-  attachBanner(appEl);
+  attachBanner(document.getElementById('auth-panel'));
 }
 
 function showLobby(user) {
@@ -66,7 +66,7 @@ function showLobby(user) {
   });
   appEl.innerHTML = lobby.render();
   lobby.mount();
-  attachBanner(appEl);
+  attachBanner(document.getElementById('lobby'));
 }
 
 function loadApp(roomData, user) {
