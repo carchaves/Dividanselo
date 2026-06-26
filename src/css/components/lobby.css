@@ -163,6 +163,7 @@
 .my-room-item__name {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
+  color: var(--color-text);
   flex: 1;
 }
 
