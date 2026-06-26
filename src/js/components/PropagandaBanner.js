@@ -32,11 +32,25 @@ export function initPropagandaBanner() {
       imgEl.style.opacity = '1';
     }, 200);
   });
+
+  const observer = new MutationObserver(updateVisibility);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 }
 
 export function attachBanner(container) {
   if (!bannerEl || !container) return;
   container.appendChild(bannerEl);
+  updateVisibility();
+}
+
+function updateVisibility() {
+  if (!bannerEl) return;
+  const active = document.documentElement.getAttribute('data-theme') === 'communist';
+  bannerEl.style.display = active ? 'block' : 'none';
+  const wrapper = bannerEl.parentElement;
+  if (wrapper?.classList.contains('card')) {
+    wrapper.style.display = active ? 'block' : 'none';
+  }
 }
 
 function pickRandom() {
