@@ -153,7 +153,17 @@ function loadApp(roomData, user) {
     onSwitch(tabId) { panels[tabId]?.onActivate?.(); },
   });
   tabs.mount();
-  attachBanner(mainContent);
+
+  const propagandaCard = document.createElement('div');
+  propagandaCard.className = 'card';
+  propagandaCard.style.cssText = 'padding: 0; overflow: hidden;';
+  const propagandaTitle = document.createElement('div');
+  propagandaTitle.className = 'card__title';
+  propagandaTitle.style.cssText = 'padding: var(--space-4) var(--space-5) var(--space-3);';
+  propagandaTitle.textContent = 'Propaganda';
+  propagandaCard.appendChild(propagandaTitle);
+  attachBanner(propagandaCard);
+  mainContent.appendChild(propagandaCard);
 }
 
 function escHtml(str = '') {

@@ -80,6 +80,16 @@
   position: relative;
 }
 
+/* Inside a .card: strip own card styles, image goes edge-to-edge */
+.card > #propaganda-banner {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
 #propaganda-banner img {
   width: 100%;
   height: auto;
