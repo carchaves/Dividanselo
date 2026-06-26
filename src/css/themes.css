@@ -64,3 +64,46 @@
   border-color: rgba(255, 255, 255, 0.45);
   transform: scale(1.1);
 }
+
+/* ── Propaganda banner ── */
+#propaganda-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 230px;
+  z-index: 400;
+  background: #0a0808;
+  border-top: 2px solid #5a0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  gap: 0;
+}
+
+#propaganda-banner img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+#propaganda-banner::after {
+  content: 'clic para cambiar';
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 10px;
+  color: rgba(240, 220, 180, 0.4);
+  pointer-events: none;
+  transition: opacity 0.2s;
+  opacity: 0;
+}
+
+#propaganda-banner:hover::after {
+  opacity: 1;
+}
