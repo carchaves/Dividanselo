@@ -32,7 +32,8 @@
   padding: var(--space-6);
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
   margin-bottom: var(--space-4);
 }
 
@@ -201,8 +202,8 @@
 
 /* ── Success state ── */
 .lobby-success {
-  background: #dcfce7;
-  color: #16a34a;
+  background: #0d2a18;
+  color: #4ade80;
   border-radius: var(--radius-md);
   padding: 10px 14px;
   font-size: var(--font-size-sm);
