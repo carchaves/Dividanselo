@@ -1,0 +1,84 @@
+/* ── App shell ── */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+#app-header {
+  background: var(--header-gradient);
+  color: #fff;
+  padding: var(--space-6) var(--space-5) 0;
+  text-align: center;
+}
+
+.header-content {
+  padding-bottom: var(--space-4);
+}
+
+.app-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  margin-top: var(--space-1);
+}
+
+/* ── Tab nav ── */
+.tab-nav {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 6px;
+  border: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.tab-btn.is-active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+/* ── Main content area ── */
+#main-content {
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) 80px;
+}
+
+/* ── Panel (tab content) ── */
+.panel {
+  display: none;
+}
+
+.panel.is-active {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .app-title { font-size: var(--font-size-xl); }
+}

@@ -1,0 +1,131 @@
+#lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--header-gradient);
+  padding: var(--space-6) var(--space-4);
+}
+
+.lobby-logo {
+  text-align: center;
+  color: white;
+  margin-bottom: var(--space-8);
+}
+
+.lobby-logo__title {
+  font-size: 40px;
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -1px;
+}
+
+.lobby-logo__subtitle {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  margin-top: var(--space-1);
+}
+
+.lobby-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  margin-bottom: var(--space-4);
+}
+
+.lobby-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-4);
+}
+
+.lobby-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: var(--space-4);
+}
+
+.lobby-divider__line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.lobby-divider__text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ── Room header (inside the app) ── */
+.room-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(0, 0, 0, 0.15);
+  margin-top: var(--space-3);
+}
+
+.room-header__name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.room-code-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.room-code-badge:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.room-code-badge__label {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: var(--font-weight-semibold);
+}
+
+.room-code-badge__code {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  color: white;
+  letter-spacing: 2px;
+}
+
+.room-code-badge__icon {
+  font-size: var(--font-size-sm);
+}
+
+/* ── Error state ── */
+.lobby-error {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--space-3);
+  display: none;
+}
+
+.lobby-error.is-visible {
+  display: block;
+}

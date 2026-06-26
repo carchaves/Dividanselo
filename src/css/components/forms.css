@@ -1,0 +1,119 @@
+.form-field {
+  margin-bottom: var(--space-3);
+}
+
+.form-field__label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.form-field__input,
+.form-field__select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color var(--transition-base);
+  outline: none;
+  appearance: none;
+}
+
+.form-field__input:focus,
+.form-field__select:focus {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.form-field__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* ── Row layout for side-by-side fields ── */
+.form-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+/* ── Checkbox grid for split selection ── */
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.split-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.split-check:hover {
+  border-color: var(--color-primary);
+}
+
+.split-check.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.split-check__input {
+  display: none;
+}
+
+.split-check__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  font-size: 9px;
+}
+
+.split-check.is-selected .split-check__dot {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.split-check__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.split-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .form-row { flex-direction: column; }
+}
