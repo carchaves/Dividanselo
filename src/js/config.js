@@ -2,4 +2,4 @@
 // After deploying to Render, replace the URL below with your actual Render URL.
 export const BACKEND_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3000'
-  : 'https://dividanselo-backend.onrender.com';
+  : 'https://dividanselo.onrender.com';
