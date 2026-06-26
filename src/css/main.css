@@ -1,6 +1,9 @@
 /* ── Design tokens ── */
 @import './variables.css';
 
+/* ── Themes ── */
+@import './themes.css';
+
 /* ── Reset ── */
 @import './reset.css';
 

@@ -1,4 +1,5 @@
 import { State }            from './core/state.js';
+import { initThemeToggle } from './core/themeToggle.js';
 import { Storage }          from './core/storage.js';
 import { initSocket, disconnectSocket } from './core/socket.js';
 import { api }              from './api/client.js';
@@ -159,4 +160,5 @@ function escHtml(str = '') {
     .replace(/"/g, '&quot;');
 }
 
+initThemeToggle();
 bootstrap();
