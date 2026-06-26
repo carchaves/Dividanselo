@@ -12,7 +12,7 @@ export class AuthPanel {
     return `
       <div id="auth-panel">
         <div class="auth-logo">
-          <div class="auth-logo__title">✂️ Dividanselo</div>
+          <div class="auth-logo__title">Dividanselo</div>
           <div class="auth-logo__subtitle">Divide gastos entre amigos sin dramas</div>
         </div>
 

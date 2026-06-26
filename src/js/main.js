@@ -73,7 +73,7 @@ function loadApp(roomData, user) {
     <header id="app-header">
       <div class="header-content">
         <button class="btn-back-lobby" id="btn-back-lobby" title="Volver a mis grupos">← Grupos</button>
-        <h1 class="app-title">✂️ Dividanselo</h1>
+        <h1 class="app-title">Dividanselo</h1>
         <p class="app-subtitle">Divide gastos entre amigos sin dramas</p>
       </div>
       <div class="room-header">

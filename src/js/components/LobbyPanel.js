@@ -12,7 +12,7 @@ export class LobbyPanel {
     return `
       <div id="lobby">
         <div class="lobby-logo">
-          <div class="lobby-logo__title">✂️ Dividanselo</div>
+          <div class="lobby-logo__title">Dividanselo</div>
           <div class="lobby-logo__subtitle">Hola, <strong>${escHtml(this._user.displayName)}</strong> 👋</div>
           <div class="lobby-user-actions">
             <button id="btn-change-password" class="lobby-user-btn">🔑 Cambiar contraseña</button>
