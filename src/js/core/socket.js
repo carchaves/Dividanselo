@@ -1,10 +1,10 @@
 import { State } from './state.js';
+import { BACKEND_URL } from '../config.js';
 
 let _socket = null;
 
 export function initSocket(roomId) {
-  // `io` is available globally via the socket.io script in index.html
-  _socket = io();
+  _socket = io(BACKEND_URL);
 
   _socket.on('connect', () => {
     _socket.emit('join:room', roomId);

@@ -1,4 +1,6 @@
-const BASE = '/api';
+import { BACKEND_URL } from '../config.js';
+
+const BASE = `${BACKEND_URL}/api`;
 
 function getToken() {
   return localStorage.getItem('dividanselo_token');
