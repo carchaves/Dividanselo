@@ -1,0 +1,10 @@
+node_modules/
+server/node_modules/
+
+# SQLite WAL journal files (session-specific, should not be in repo)
+*.db-wal
+*.db-shm
+
+# Environment files
+.env
+.env.local

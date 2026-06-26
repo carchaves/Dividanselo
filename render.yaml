@@ -3,7 +3,7 @@ services:
     name: dividanselo-backend
     runtime: node
     rootDir: server
-    buildCommand: npm install
+    buildCommand: npm install --build-from-source
     startCommand: npm start
     envVars:
       - key: NODE_ENV
