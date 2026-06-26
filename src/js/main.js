@@ -1,6 +1,6 @@
 import { State }            from './core/state.js';
 import { initThemeToggle }    from './core/themeToggle.js';
-import { initPropagandaBanner } from './components/PropagandaBanner.js';
+import { initPropagandaBanner, attachBanner } from './components/PropagandaBanner.js';
 import { Storage }          from './core/storage.js';
 import { initSocket, disconnectSocket } from './core/socket.js';
 import { api }              from './api/client.js';
@@ -49,6 +49,7 @@ function showAuth() {
   });
   appEl.innerHTML = auth.render();
   auth.mount();
+  attachBanner(appEl);
 }
 
 function showLobby(user) {
@@ -65,6 +66,7 @@ function showLobby(user) {
   });
   appEl.innerHTML = lobby.render();
   lobby.mount();
+  attachBanner(appEl);
 }
 
 function loadApp(roomData, user) {
@@ -151,6 +153,7 @@ function loadApp(roomData, user) {
     onSwitch(tabId) { panels[tabId]?.onActivate?.(); },
   });
   tabs.mount();
+  attachBanner(mainContent);
 }
 
 function escHtml(str = '') {

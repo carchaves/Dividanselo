@@ -32,9 +32,11 @@ export function initPropagandaBanner() {
       imgEl.style.opacity = '1';
     }, 200);
   });
+}
 
-  document.body.appendChild(bannerEl);
-  document.body.style.paddingBottom = '240px';
+export function attachBanner(container) {
+  if (!bannerEl || !container) return;
+  container.appendChild(bannerEl);
 }
 
 function pickRandom() {
