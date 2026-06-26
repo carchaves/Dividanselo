@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import db from '../db/database.js';
 import { requireAuth } from '../middleware/authMiddleware.js';
-import { genId, pickColor } from '../utils/helpers.js';
 
 export default function participantsRouter(io) {
   const router = Router();
@@ -30,6 +29,11 @@ export default function participantsRouter(io) {
     orphaned.forEach(({ id }) => db.prepare('DELETE FROM expenses WHERE id = ?').run(id));
 
     db.prepare('DELETE FROM participants WHERE id = ?').run(participantId);
+
+    const remaining = db.prepare('SELECT COUNT(*) AS n FROM participants WHERE room_id = ?').get(roomId).n;
+    if (remaining === 0) {
+      db.prepare('DELETE FROM rooms WHERE id = ?').run(roomId);
+    }
 
     io.to(roomId).emit('participant:removed', { participantId });
     res.status(204).send();
