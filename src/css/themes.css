@@ -1,41 +1,40 @@
 /* ── Communist theme ── */
 [data-theme="communist"] {
-  --color-primary:       #e8c132;
-  --color-primary-dark:  #c9a820;
-  --color-primary-light: #3d2800;
-  --color-accent:        #ff3333;
-  --color-success:       #e8c132;
-  --color-danger:        #ff4444;
-  --color-danger-light:  #3d0000;
-  --color-danger-hover:  #500000;
+  /* Rojo soviético como color de acción, dorado como secundario */
+  --color-primary:       #c0392b;
+  --color-primary-dark:  #a0301f;
+  --color-primary-light: #3a0a08;
+  --color-accent:        #d4a017;
+  --color-success:       #d4a017;
+  --color-warning:       #d4a017;
+  --color-danger:        #e74c3c;
+  --color-danger-light:  #3a0808;
+  --color-danger-hover:  #4d1010;
 
-  --color-bg:            #1c0000;
-  --color-surface:       #2d0808;
-  --color-surface-hover: #400a0a;
-  --color-text:          #f0e0c0;
-  --color-text-muted:    #c4956a;
-  --color-border:        #8b1a1a;
+  /* Base neutra oscura cálida — no fondo rojo puro */
+  --color-bg:            #12100e;
+  --color-surface:       #1e1a16;
+  --color-surface-hover: #2a2218;
+  --color-text:          #f2e8d0;
+  --color-text-muted:    #a89878;
+  --color-border:        #3d2a18;
 
-  --shadow-primary:      0 4px 14px rgba(232, 193, 50, 0.3);
-  --header-gradient:     linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
-}
-
-[data-theme="communist"] .btn--primary {
-  color: #1c0000;
+  --shadow-primary:      0 4px 14px rgba(192, 57, 43, 0.4);
+  --header-gradient:     linear-gradient(135deg, #7b0000 0%, #3d0000 100%);
 }
 
 [data-theme="communist"] .btn--ghost {
-  background: #3d2800;
-  color: #e8c132;
+  background: #3a0a08;
+  color: #c0392b;
 }
 
 [data-theme="communist"] .btn--ghost:hover {
-  background: #503800;
+  background: #4d1010;
 }
 
 [data-theme="communist"] .lobby-success {
-  background: #3d2800;
-  color: #e8c132;
+  background: #2a1e00;
+  color: #d4a017;
 }
 
 /* ── Theme toggle button ── */
