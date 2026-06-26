@@ -86,7 +86,7 @@ function loadApp(roomData, user) {
           </button>
           <button class="room-leave-btn" id="btn-leave-room" title="Salir del grupo">Salir</button>
           <button class="room-logout-btn" id="btn-logout" title="Cerrar sesión">
-            ${escHtml(user.displayName)} ↩
+            Cerrar sesión
           </button>
         </div>
       </div>
