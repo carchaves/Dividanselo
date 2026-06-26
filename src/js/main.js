@@ -54,7 +54,7 @@ async function bootstrap() {
 
 function showAuth() {
   const auth = new AuthPanel({
-    onAuth(userData) {
+    onAuth() {
       bootstrap();
     },
   });
@@ -68,6 +68,11 @@ function showLobby(user) {
     onJoin(roomData) {
       Storage.saveRoomId(roomData.id);
       loadApp(roomData, user);
+    },
+    onLogout() {
+      Storage.clearAll();
+      history.replaceState({}, '', window.location.pathname);
+      showAuth();
     },
   });
   appEl.innerHTML = lobby.render();
@@ -154,7 +159,6 @@ function leaveRoom() {
   disconnectSocket();
   Storage.clearRoomId();
   history.replaceState({}, '', window.location.pathname);
-  const token = Storage.loadToken();
   // Re-derive user from token without another API call
   api.me().then(user => showLobby(user)).catch(() => { Storage.clearToken(); showAuth(); });
 }

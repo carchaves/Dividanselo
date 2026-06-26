@@ -114,6 +114,47 @@
   font-size: var(--font-size-sm);
 }
 
+/* ── User actions (logout / change password) ── */
+.lobby-user-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.lobby-user-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.lobby-user-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Success state ── */
+.lobby-success {
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-top: var(--space-3);
+  display: none;
+}
+
+.lobby-success.is-visible {
+  display: block;
+}
+
 /* ── Error state ── */
 .lobby-error {
   background: var(--color-danger-light);

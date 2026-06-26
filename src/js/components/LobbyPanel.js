@@ -1,11 +1,11 @@
 import { api } from '../api/client.js';
-import { Storage } from '../core/storage.js';
 import { shakeElement, escHtml } from '../utils/dom.js';
 
 export class LobbyPanel {
-  constructor({ user, onJoin }) {
-    this._user  = user;
-    this._onJoin = onJoin;
+  constructor({ user, onJoin, onLogout }) {
+    this._user     = user;
+    this._onJoin   = onJoin;
+    this._onLogout = onLogout;
   }
 
   render() {
@@ -14,6 +14,26 @@ export class LobbyPanel {
         <div class="lobby-logo">
           <div class="lobby-logo__title">✂️ Dividanselo</div>
           <div class="lobby-logo__subtitle">Hola, <strong>${escHtml(this._user.displayName)}</strong> 👋</div>
+          <div class="lobby-user-actions">
+            <button id="btn-change-password" class="lobby-user-btn">🔑 Cambiar contraseña</button>
+            <button id="btn-logout" class="lobby-user-btn">↩ Cerrar sesión</button>
+          </div>
+        </div>
+
+        <!-- Cambiar contraseña (oculto por defecto) -->
+        <div class="lobby-card" id="change-password-card" style="display:none">
+          <div class="lobby-card__title">🔑 Cambiar contraseña</div>
+          <div class="form-field">
+            <label class="form-field__label" for="inp-current-password">Contraseña actual</label>
+            <input id="inp-current-password" class="form-field__input" type="password" autocomplete="current-password" />
+          </div>
+          <div class="form-field mt-3">
+            <label class="form-field__label" for="inp-new-password">Nueva contraseña</label>
+            <input id="inp-new-password" class="form-field__input" type="password" autocomplete="new-password" />
+          </div>
+          <button id="btn-save-password" class="btn btn--primary btn--full mt-3">Guardar</button>
+          <div id="change-password-error" class="lobby-error"></div>
+          <div id="change-password-ok" class="lobby-success"></div>
         </div>
 
         <!-- Crear sala -->
@@ -68,6 +88,19 @@ export class LobbyPanel {
   }
 
   mount() {
+    document.getElementById('btn-logout').addEventListener('click', () => this._onLogout());
+
+    document.getElementById('btn-change-password').addEventListener('click', () => {
+      const card = document.getElementById('change-password-card');
+      const visible = card.style.display !== 'none';
+      card.style.display = visible ? 'none' : 'block';
+    });
+
+    document.getElementById('btn-save-password').addEventListener('click', () => this._changePassword());
+    document.getElementById('inp-new-password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') this._changePassword();
+    });
+
     document.getElementById('btn-create-room').addEventListener('click', () => this._createRoom());
     document.getElementById('btn-join-room').addEventListener('click',   () => this._joinRoom());
 
@@ -81,9 +114,31 @@ export class LobbyPanel {
       e.target.value = e.target.value.toUpperCase();
     });
 
-    // Auto-join if room code is in URL
     const urlCode = new URLSearchParams(window.location.search).get('room');
     if (urlCode) this._joinWithCode(urlCode.toUpperCase());
+  }
+
+  async _changePassword() {
+    const currentEl = document.getElementById('inp-current-password');
+    const newEl     = document.getElementById('inp-new-password');
+    if (!currentEl.value) { shakeElement(currentEl); return; }
+    if (!newEl.value)     { shakeElement(newEl);     return; }
+
+    const btn = document.getElementById('btn-save-password');
+    btn.textContent = 'Guardando…';
+    btn.disabled    = true;
+
+    try {
+      await api.changePassword(currentEl.value, newEl.value);
+      currentEl.value = '';
+      newEl.value     = '';
+      this._showSuccess('change-password-ok', '✅ Contraseña actualizada');
+    } catch (err) {
+      this._showError('change-password-error', err.message);
+    } finally {
+      btn.textContent = 'Guardar';
+      btn.disabled    = false;
+    }
   }
 
   async _createRoom() {
@@ -137,5 +192,13 @@ export class LobbyPanel {
     el.textContent = msg;
     el.classList.add('is-visible');
     setTimeout(() => el.classList.remove('is-visible'), 4000);
+  }
+
+  _showSuccess(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('is-visible');
+    setTimeout(() => el.classList.remove('is-visible'), 3000);
   }
 }

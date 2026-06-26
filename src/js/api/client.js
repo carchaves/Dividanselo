@@ -28,7 +28,8 @@ export const api = {
   // Auth
   register: (username, displayName, password) => request('POST', '/auth/register', { username, displayName, password }),
   login:    (username, password)              => request('POST', '/auth/login',    { username, password }),
-  me:       ()                                => request('GET',  '/auth/me'),
+  me:             ()                                    => request('GET',  '/auth/me'),
+  changePassword: (currentPassword, newPassword)       => request('PUT',  '/auth/change-password', { currentPassword, newPassword }),
 
   // Rooms
   createRoom:        (name)              => request('POST',   '/rooms',                            { name }),

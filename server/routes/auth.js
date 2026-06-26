@@ -83,5 +83,22 @@ export default function authRouter() {
     });
   });
 
+  // PUT /api/auth/change-password
+  router.put('/change-password', requireAuth, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword)
+      return res.status(400).json({ error: 'Faltan campos requeridos' });
+    if (newPassword.length < 6)
+      return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 6 caracteres' });
+
+    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user.userId);
+    const valid = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!valid) return res.status(401).json({ error: 'La contraseña actual es incorrecta' });
+
+    const hash = await bcrypt.hash(newPassword, 10);
+    db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(hash, req.user.userId);
+    res.json({ ok: true });
+  });
+
   return router;
 }
