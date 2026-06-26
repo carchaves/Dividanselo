@@ -12,12 +12,8 @@ import { SettlementPanel }   from './components/SettlementPanel.js';
 const appEl = document.getElementById('app');
 
 async function bootstrap() {
-  // ── 1. Verify authentication ──
   const token = Storage.loadToken();
-  if (!token) {
-    showAuth();
-    return;
-  }
+  if (!token) { showAuth(); return; }
 
   let user;
   try {
@@ -28,25 +24,18 @@ async function bootstrap() {
     return;
   }
 
-  // ── 2. Try to load a room ──
-  const urlCode   = new URLSearchParams(window.location.search).get('room');
-  const savedCode = Storage.loadRoomId();
-  const roomCode  = urlCode ?? savedCode;
-
-  if (roomCode) {
+  // Auto-join only when coming from a shared link (?room=XXXXX)
+  const urlCode = new URLSearchParams(window.location.search).get('room');
+  if (urlCode) {
+    history.replaceState({}, '', window.location.pathname);
     try {
-      let roomData = await api.getRoom(roomCode.toUpperCase());
-      // Auto-join if the user is not yet a member (e.g. came from a shared link)
+      let roomData = await api.getRoom(urlCode.toUpperCase());
       if (!roomData.currentParticipantId) {
-        roomData = await api.joinRoom(roomCode.toUpperCase());
+        roomData = await api.joinRoom(urlCode.toUpperCase());
       }
-      Storage.saveRoomId(roomData.id);
       loadApp(roomData, user);
       return;
-    } catch {
-      Storage.clearRoomId();
-      history.replaceState({}, '', window.location.pathname);
-    }
+    } catch { /* fall through to lobby */ }
   }
 
   showLobby(user);
@@ -54,9 +43,7 @@ async function bootstrap() {
 
 function showAuth() {
   const auth = new AuthPanel({
-    onAuth() {
-      bootstrap();
-    },
+    onAuth() { bootstrap(); },
   });
   appEl.innerHTML = auth.render();
   auth.mount();
@@ -66,7 +53,6 @@ function showLobby(user) {
   const lobby = new LobbyPanel({
     user,
     onJoin(roomData) {
-      Storage.saveRoomId(roomData.id);
       loadApp(roomData, user);
     },
     onLogout() {
@@ -86,6 +72,7 @@ function loadApp(roomData, user) {
   appEl.innerHTML = `
     <header id="app-header">
       <div class="header-content">
+        <button class="btn-back-lobby" id="btn-back-lobby" title="Volver a mis grupos">← Grupos</button>
         <h1 class="app-title">✂️ Dividanselo</h1>
         <p class="app-subtitle">Divide gastos entre amigos sin dramas</p>
       </div>
@@ -108,6 +95,13 @@ function loadApp(roomData, user) {
     <main id="main-content" role="main"></main>
   `;
 
+  // Back to lobby (without leaving the room)
+  document.getElementById('btn-back-lobby').addEventListener('click', () => {
+    disconnectSocket();
+    history.replaceState({}, '', window.location.pathname);
+    showLobby(user);
+  });
+
   // Copy room code to clipboard
   document.getElementById('copy-code-btn').addEventListener('click', () => {
     navigator.clipboard.writeText(roomData.id).then(() => {
@@ -124,7 +118,9 @@ function loadApp(roomData, user) {
     try {
       await api.removeParticipant(room.id, currentParticipantId);
     } catch { /* ignore */ }
-    leaveRoom();
+    disconnectSocket();
+    history.replaceState({}, '', window.location.pathname);
+    showLobby(user);
   });
 
   // Logout
@@ -153,14 +149,6 @@ function loadApp(roomData, user) {
     onSwitch(tabId) { panels[tabId]?.onActivate?.(); },
   });
   tabs.mount();
-}
-
-function leaveRoom() {
-  disconnectSocket();
-  Storage.clearRoomId();
-  history.replaceState({}, '', window.location.pathname);
-  // Re-derive user from token without another API call
-  api.me().then(user => showLobby(user)).catch(() => { Storage.clearToken(); showAuth(); });
 }
 
 function escHtml(str = '') {

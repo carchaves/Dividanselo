@@ -32,6 +32,7 @@ export const api = {
   changePassword: (currentPassword, newPassword)       => request('PUT',  '/auth/change-password', { currentPassword, newPassword }),
 
   // Rooms
+  getMyRooms:        ()                  => request('GET',    '/rooms'),
   createRoom:        (name)              => request('POST',   '/rooms',                            { name }),
   getRoom:           (id)                => request('GET',    `/rooms/${id}`),
   joinRoom:          (id)                => request('POST',   `/rooms/${id}/join`),

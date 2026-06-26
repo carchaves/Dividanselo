@@ -42,6 +42,20 @@ export default function roomsRouter(io) {
     };
   }
 
+  // GET /api/rooms — salas en las que el usuario es participante
+  router.get('/', requireAuth, (req, res) => {
+    const rows = db.prepare(`
+      SELECT r.id, r.name, r.created_at,
+             COUNT(p2.id) AS participant_count
+      FROM rooms r
+      JOIN participants p  ON r.id = p.room_id AND p.user_id = ?
+      LEFT JOIN participants p2 ON r.id = p2.room_id
+      GROUP BY r.id
+      ORDER BY r.created_at DESC
+    `).all(req.user.userId);
+    res.json(rows);
+  });
+
   // POST /api/rooms — crear sala (requiere auth)
   router.post('/', requireAuth, (req, res) => {
     const name = req.body.name?.trim();

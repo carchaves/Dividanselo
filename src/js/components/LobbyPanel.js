@@ -36,6 +36,12 @@ export class LobbyPanel {
           <div id="change-password-ok" class="lobby-success"></div>
         </div>
 
+        <!-- Mis grupos (se rellena dinámicamente) -->
+        <div class="lobby-card" id="my-rooms-card" style="display:none">
+          <div class="lobby-card__title">📂 Mis grupos</div>
+          <div id="my-rooms-list"></div>
+        </div>
+
         <!-- Crear sala -->
         <div class="lobby-card">
           <div class="lobby-card__title">✨ Crear un nuevo grupo</div>
@@ -114,8 +120,42 @@ export class LobbyPanel {
       e.target.value = e.target.value.toUpperCase();
     });
 
+    this._loadMyRooms();
+
     const urlCode = new URLSearchParams(window.location.search).get('room');
     if (urlCode) this._joinWithCode(urlCode.toUpperCase());
+  }
+
+  async _loadMyRooms() {
+    try {
+      const rooms = await api.getMyRooms();
+      if (!rooms.length) return;
+
+      const list = document.getElementById('my-rooms-list');
+      list.innerHTML = rooms.map(r => `
+        <button class="my-room-item" data-id="${escHtml(r.id)}">
+          <span class="my-room-item__name">${escHtml(r.name)}</span>
+          <span class="my-room-item__meta">${r.participant_count} ${r.participant_count === 1 ? 'persona' : 'personas'} · ${escHtml(r.id)}</span>
+          <span class="my-room-item__arrow">→</span>
+        </button>
+      `).join('');
+
+      list.querySelectorAll('.my-room-item').forEach(btn => {
+        btn.addEventListener('click', () => this._enterRoom(btn.dataset.id));
+      });
+
+      document.getElementById('my-rooms-card').style.display = 'block';
+    } catch { /* silently skip if API fails */ }
+  }
+
+  async _enterRoom(roomId) {
+    try {
+      const roomData = await api.getRoom(roomId);
+      this._onJoin(roomData);
+    } catch (err) {
+      // Room may have been deleted; refresh the list
+      this._loadMyRooms();
+    }
   }
 
   async _changePassword() {
@@ -152,7 +192,6 @@ export class LobbyPanel {
 
     try {
       const roomData = await api.createRoom(name);
-      history.pushState({}, '', `?room=${roomData.id}`);
       this._onJoin(roomData);
     } catch (err) {
       this._showError('create-error', err.message);
@@ -177,7 +216,6 @@ export class LobbyPanel {
 
     try {
       const roomData = await api.joinRoom(code);
-      history.pushState({}, '', `?room=${roomData.id}`);
       this._onJoin(roomData);
     } catch (err) {
       this._showError('join-error', 'No se encontró ningún grupo con ese código.');
